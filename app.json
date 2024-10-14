@@ -28,7 +28,8 @@
     "plugins": ["expo-router"],
     "experiments": {
       "typedRoutes": true,
-      "tsconfigPaths": true
+      "tsconfigPaths": true,
+      "baseUrl": "/expo-gluestack-v2-app"
     }
   }
 }
