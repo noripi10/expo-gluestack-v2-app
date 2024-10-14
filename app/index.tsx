@@ -1,24 +1,23 @@
-import "@/global.css";
-import { StatusBar } from "expo-status-bar";
 import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
 import { Alert, KeyboardAvoidingView, Platform, Pressable, StyleSheet, useColorScheme, View } from "react-native";
-import { Box } from "./components/ui/box";
-import { Button, ButtonText } from "./components/ui/button";
-import { Text } from "./components/ui/text";
-import { Heading } from "./components/ui/heading";
-import { Divider } from "./components/ui/divider";
-import { HStack } from "./components/ui/hstack";
-import { Input, InputField, InputIcon, InputSlot } from "./components/ui/input";
-import { MailIcon } from "./components/ui/icon";
-import { LinearGradient } from "./components/ui/linear-gradient";
+import { Box } from "../components/ui/box";
+import { Button, ButtonText } from "../components/ui/button";
+import { Text } from "../components/ui/text";
+import { Heading } from "../components/ui/heading";
+import { Divider } from "../components/ui/divider";
+import { HStack } from "../components/ui/hstack";
+import { Input, InputField, InputIcon, InputSlot } from "../components/ui/input";
+import { MailIcon } from "../components/ui/icon";
+import { LinearGradient } from "../components/ui/linear-gradient";
+import { Link } from "expo-router";
 
 const PADDING_TOP = 48;
 
-export default function App() {
+export default function Home() {
   const colorScheme = useColorScheme();
 
   return (
-    <GluestackUIProvider mode={colorScheme === "dark" ? "dark" : "light"}>
+    <>
       <KeyboardAvoidingView
         style={{ flex: 1, backgroundColor: colorScheme === "dark" ? "#000" : "#fff" }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -29,14 +28,22 @@ export default function App() {
           <Heading size="2xl">gluestack-ui</Heading>
 
           <HStack className="gap-2">
-            <Button size={"lg"} action={"primary"}>
-              <ButtonText>Button</ButtonText>
-            </Button>
+            <Link href="/modal" asChild>
+              <Button size={"lg"} action={"primary"}>
+                <ButtonText>Show Modal</ButtonText>
+              </Button>
+            </Link>
 
             <Divider orientation="vertical" />
 
-            <Button size={"lg"} action={"negative"}>
-              <ButtonText>Button</ButtonText>
+            <Button
+              size={"lg"}
+              action={"negative"}
+              onPress={() => {
+                Alert.alert("On Press");
+              }}
+            >
+              <ButtonText>Alert</ButtonText>
             </Button>
           </HStack>
 
@@ -72,9 +79,7 @@ export default function App() {
       <Box className="absolute right-2 bottom-2">
         <Text>Hoge</Text>
       </Box>
-
-      <StatusBar style="auto" />
-    </GluestackUIProvider>
+    </>
   );
 }
 
