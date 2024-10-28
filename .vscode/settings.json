@@ -1,5 +1,4 @@
 {
-  "tailwindCSS.experimental.classRegex": [
-    ["tva\\((([^()]*|\\([^()]*\\))*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
-  ]
+  "biome.enabled": false,
+  "tailwindCSS.experimental.classRegex": [["tva\\((([^()]*|\\([^()]*\\))*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]]
 }

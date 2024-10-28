@@ -1,4 +1,13 @@
-import { Alert, KeyboardAvoidingView, Platform, Pressable, StyleSheet, useColorScheme, View } from "react-native";
+import {
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  PressableProps,
+  StyleSheet,
+  useColorScheme,
+  View,
+} from "react-native";
 import { Box } from "../components/ui/box";
 import { Button, ButtonText } from "../components/ui/button";
 import { Text } from "../components/ui/text";
@@ -10,11 +19,30 @@ import { MailIcon } from "../components/ui/icon";
 import { LinearGradient } from "../components/ui/linear-gradient";
 import { Link } from "expo-router";
 import { VStack } from "@/components/ui/vstack";
+import Animated, {
+  Extrapolation,
+  interpolate,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+  withTiming,
+} from "react-native-reanimated";
+import { ComponentProps } from "react";
 
 const PADDING_TOP = 48;
 
+const AnimatedPressable = Animated.createAnimatedComponent<ComponentProps<typeof Pressable>>(Pressable);
+
 export default function Home() {
   const colorScheme = useColorScheme();
+
+  const sharedValue = useSharedValue(1);
+  const animatedOpacity = useAnimatedStyle(() => {
+    return {
+      opacity: interpolate(sharedValue.value, [0.95, 1], [0.7, 1], Extrapolation.CLAMP),
+      transform: [{ scale: withTiming(sharedValue.value, { duration: 750 }) }],
+    };
+  });
 
   return (
     <>
@@ -64,11 +92,15 @@ export default function Home() {
               </InputSlot>
             </Input>
 
-            <Pressable
+            <AnimatedPressable
               className="w-full"
+              style={[animatedOpacity]}
               onPress={() => {
-                Alert.alert("On Press");
+                // Alert.alert("On Press");
+                // alert("ok");
               }}
+              onPressIn={() => (sharedValue.value = 0.95)}
+              onPressOut={() => (sharedValue.value = 1)}
             >
               <LinearGradient
                 className="w-full rounded-full items-center justify-center py-3"
@@ -78,7 +110,7 @@ export default function Home() {
               >
                 <Text>BUTTON</Text>
               </LinearGradient>
-            </Pressable>
+            </AnimatedPressable>
           </VStack>
         </Box>
       </KeyboardAvoidingView>
